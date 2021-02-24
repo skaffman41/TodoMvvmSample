@@ -3,8 +3,9 @@ package com.example.todomvvmsample.data.repo
 import com.example.todomvvmsample.data.Task
 import com.example.todomvvmsample.data.db.TaskDao
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class TasksRepositoryImpl(
+class TasksRepositoryImpl @Inject constructor(
     private val taskDao: TaskDao
 ) : TasksRepository {
     override fun getTasks(): Flow<List<Task>> {
