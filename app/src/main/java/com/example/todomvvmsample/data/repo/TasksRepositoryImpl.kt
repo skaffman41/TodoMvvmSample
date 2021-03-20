@@ -8,8 +8,8 @@ import javax.inject.Inject
 class TasksRepositoryImpl @Inject constructor(
     private val taskDao: TaskDao
 ) : TasksRepository {
-    override fun getTasks(): Flow<List<Task>> {
-        return taskDao.getTasks()
+    override fun getTasks(searchQuery: String): Flow<List<Task>> {
+        return taskDao.getTasks(searchQuery)
     }
 
     override suspend fun insert(task: Task) {
