@@ -1,8 +1,8 @@
 package com.example.todomvvmsample.data.repo
 
+import com.example.todomvvmsample.data.SortOrder
 import com.example.todomvvmsample.data.Task
 import com.example.todomvvmsample.data.db.TaskDao
-import com.example.todomvvmsample.ui.tasks.SortOrder
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
