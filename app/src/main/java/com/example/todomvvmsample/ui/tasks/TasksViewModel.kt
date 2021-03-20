@@ -5,6 +5,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.todomvvmsample.data.PreferencesManager
 import com.example.todomvvmsample.data.SortOrder
+import com.example.todomvvmsample.data.Task
 import com.example.todomvvmsample.data.repo.TasksRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,6 +37,8 @@ class TasksViewModel @Inject constructor(
         )
     }
 
+    val tasks = tasksFlow.asLiveData()
+
     fun onSortOrderSelected(sortOrder: SortOrder) {
         viewModelScope.launch {
             preferencesManager.updateSortOrder(sortOrder)
@@ -48,5 +51,13 @@ class TasksViewModel @Inject constructor(
         }
     }
 
-    val tasks = tasksFlow.asLiveData()
+    fun onTaskSelected(task: Task) {
+        //TODO Реализовать переход в карточку задачи
+    }
+
+    fun onTaskCheckedChanged(task: Task, isChecked: Boolean) {
+        viewModelScope.launch {
+            tasksRepository.update(task.copy(completed = isChecked))
+        }
+    }
 }

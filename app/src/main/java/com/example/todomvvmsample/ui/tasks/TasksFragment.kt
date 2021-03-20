@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.todomvvmsample.R
 import com.example.todomvvmsample.data.SortOrder
+import com.example.todomvvmsample.data.Task
 import com.example.todomvvmsample.databinding.FragmentTasksBinding
 import com.example.todomvvmsample.ui.adapters.TasksAdapter
 import com.example.todomvvmsample.util.onQueryTextChanged
@@ -20,7 +21,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class TasksFragment : Fragment(R.layout.fragment_tasks) {
+class TasksFragment : Fragment(R.layout.fragment_tasks), TasksAdapter.OnItemClickListener {
     private val viewModel: TasksViewModel by viewModels()
 
     private lateinit var binding: FragmentTasksBinding
@@ -29,7 +30,7 @@ class TasksFragment : Fragment(R.layout.fragment_tasks) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentTasksBinding.bind(view)
-        tasksAdapter = TasksAdapter()
+        tasksAdapter = TasksAdapter(this)
 
         with(binding) {
             with(rvTasks) {
@@ -46,6 +47,14 @@ class TasksFragment : Fragment(R.layout.fragment_tasks) {
         viewModel.tasks.observe(viewLifecycleOwner) {
             tasksAdapter.submitList(it)
         }
+    }
+
+    override fun onItemClick(task: Task) {
+        viewModel.onTaskSelected(task)
+    }
+
+    override fun onCheckBoxClick(task: Task, isChecked: Boolean) {
+        viewModel.onTaskCheckedChanged(task, isChecked)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
